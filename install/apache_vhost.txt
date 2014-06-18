@@ -1,0 +1,19 @@
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+
+        DocumentRoot /home/netbootassist/webapp/public
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride None
+        </Directory>
+        <Directory /home/netbootassist/webapp/public/>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride None
+                Order allow,deny
+                allow from all
+        </Directory>
+
+        ErrorLog ${APACHE_LOG_DIR}/netbootassist_error.log
+        LogLevel warn
+        CustomLog ${APACHE_LOG_DIR}/netbootassist_access.log combined
+</VirtualHost>

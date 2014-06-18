@@ -1,0 +1,48 @@
+#!/bin/sh
+# put other system startup commands here
+
+#NetBootAssist
+#Parse bootloader/kernel variables
+for i in `cat /proc/cmdline`; do
+  case $i in
+    *=*)
+  case $i in
+   remotescript*) REMOTESCRIPT=${i#*=} ;;
+   accounthash*) ACCOUNTHASH=${i#*=} ;;
+   debugme*) DEBUGME=${i#*=} ;;
+  esac
+       ;;
+  esac
+done
+
+#Debug code: return shell
+if [ -n "$DEBUGME" ]; then
+/bin/sh
+fi
+
+#Disable screen blanking
+echo -e '\033[9;0]\033[14;0]' > /dev/console
+
+#Fetch MAC Address
+MACADDRESS=`ifconfig | grep 'eth0' | tr -s ' ' | cut -d ' ' -f5`
+
+if [ -n "$REMOTESCRIPT" ]; then
+	for i in 1 2 3 4
+	do
+		wget -q -O remotescript.sh "http://||URL||/boot/$ACCOUNTHASH/$MACADDRESS/$REMOTESCRIPT/"
+		if [ -f remotescript.sh ]
+		then
+			chmod +x remotescript.sh
+			sudo ./remotescript.sh
+
+			#Failover
+			reboot -f
+		fi
+		((SLEEPTIME=60*i))
+		echo Reattempting in $SLEEPTIME seconds...
+		sleep $SLEEPTIME
+	done
+fi
+
+#Failover. No Network connection has been established.
+reboot -f
