@@ -11,7 +11,9 @@ Before installing:
 WARNING: The installation script tosses old configurations away and just puts it own. I recommend using this on fresh installations only.
 
 Packages used:
-TinyCoreLinux ( http://distro.ibiblio.org/tinycorelinux/ )
-iPXE ( http://ipxe.org/ )
-Laravel ( http://laravel.com/ )
-php-tftpserver ( https://github.com/wader/php-tftpserver )
+- TinyCoreLinux ( http://distro.ibiblio.org/tinycorelinux/ )
+- iPXE ( http://ipxe.org/ )
+- Laravel ( http://laravel.com/ )
+- php-tftpserver ( https://github.com/wader/php-tftpserver )
+NOTE: Where possible the installation script pulls the latest version from their website/git.
+
